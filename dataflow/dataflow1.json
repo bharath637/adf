@@ -41,7 +41,7 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     parameter1 as date (@pipeline().parameters.StartDate)",
+				"     parameter2 as date ($parameter1)",
 				"}",
 				"source(output(",
 				"          emp_id as string,",
