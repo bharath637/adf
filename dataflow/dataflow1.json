@@ -37,11 +37,15 @@
 				},
 				{
 					"name": "window1"
+				},
+				{
+					"name": "filter1",
+					"description": "Add expression for the filter"
 				}
 			],
 			"scriptLines": [
 				"parameters{",
-				"     parameter2 as date ($parameter1)",
+				"     Start_date as string",
 				"}",
 				"source(output(",
 				"          emp_id as string,",
@@ -72,7 +76,8 @@
 				"aggregate1 window(over(emp_id),",
 				"     asc(credit_date, true),",
 				"     runningtotal = sum(salary)) ~> window1",
-				"window1 sink(allowSchemaDrift: true,",
+				"window1 filter(credit_date > $Start_date) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          dept_id as string,",
