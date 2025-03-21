@@ -1,0 +1,9 @@
+{
+	"name": "bharathdf1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bdba8545-a434-41da-8a36-ccf7045b73e7",
+		"tenantId": "3e51053c-2b01-477b-a9ed-4aaf19c34b61"
+	}
+}
