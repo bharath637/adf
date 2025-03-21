@@ -295,9 +295,16 @@
 						},
 						{
 							"name": "window1"
+						},
+						{
+							"name": "filter1",
+							"description": "Add expression for the filter"
 						}
 					],
 					"scriptLines": [
+						"parameters{",
+						"     Start_date as string",
+						"}",
 						"source(output(",
 						"          emp_id as string,",
 						"          emp_name as string,",
@@ -327,7 +334,8 @@
 						"aggregate1 window(over(emp_id),",
 						"     asc(credit_date, true),",
 						"     runningtotal = sum(salary)) ~> window1",
-						"window1 sink(allowSchemaDrift: true,",
+						"window1 filter(credit_date > $Start_date) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          dept_id as string,",
@@ -371,7 +379,71 @@
 							"dataflow": {
 								"referenceName": "dataflow1",
 								"type": "DataFlowReference",
-								"parameters": {},
+								"parameters": {
+									"Start_date": {
+										"value": "'@{pipeline().parameters.StartDate}'",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Data flow1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 60
+						}
+					},
+					{
+						"name": "Data flow1_copy1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Wait1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {
+									"Start_date": {
+										"value": "'@{pipeline().parameters.StartDate}'",
+										"type": "Expression"
+									}
+								},
 								"datasetParameters": {
 									"source1": {},
 									"source2": {},
@@ -389,6 +461,12 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"StartDate": {
+						"type": "string",
+						"defaultValue": "2025-05-01"
+					}
 				},
 				"annotations": [],
 				"lastPublishTime": "2025-03-20T17:37:19Z"
