@@ -40,6 +40,9 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     parameter1 as date (@pipeline().parameters.StartDate)",
+				"}",
 				"source(output(",
 				"          emp_id as string,",
 				"          emp_name as string,",
