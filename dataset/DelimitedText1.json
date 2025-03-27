@@ -20,27 +20,15 @@
 		},
 		"schema": [
 			{
-				"name": "emp_id",
+				"name": "retailer_number",
 				"type": "String"
 			},
 			{
-				"name": "emp_name",
+				"name": "msisdn",
 				"type": "String"
 			},
 			{
-				"name": "dept_id",
-				"type": "String"
-			},
-			{
-				"name": "salary",
-				"type": "String"
-			},
-			{
-				"name": "credit_date",
-				"type": "String"
-			},
-			{
-				"name": "dept_name",
+				"name": "report_date",
 				"type": "String"
 			}
 		]
