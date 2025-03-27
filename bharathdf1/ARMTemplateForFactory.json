@@ -129,7 +129,12 @@
 											"type": "DelimitedTextSource",
 											"storeSettings": {
 												"type": "AzureBlobFSReadSettings",
-												"recursive": true
+												"recursive": true,
+												"wildcardFolderPath": {
+													"value": "@pipeline().parameters.SourceDirectory",
+													"type": "Expression"
+												},
+												"wildcardFileName": "*"
 											},
 											"formatSettings": {
 												"type": "DelimitedTextReadSettings"
@@ -156,7 +161,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"fileName": {
-													"value": "@item().name",
+													"value": "@activity('Get Files').output.itemName",
 													"type": "Expression"
 												},
 												"SourceContainer": {
@@ -347,7 +352,21 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "retailer_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "msisdn",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "report_date",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": {
 						"value": "@dataset().schema_name",
