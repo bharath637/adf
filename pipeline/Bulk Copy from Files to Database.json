@@ -84,9 +84,18 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
-									"tableOption": "autoCreate"
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
 								},
-								"enableStaging": false
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
@@ -107,6 +116,12 @@
 										}
 									}
 								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								}
 							]
 						}
 					]
@@ -114,10 +129,10 @@
 			}
 		],
 		"parameters": {
-			"SouceContainer": {
+			"SourceContainer": {
 				"type": "string"
 			},
-			"SourcePath": {
+			"SourceDirectory": {
 				"type": "string"
 			}
 		},
