@@ -143,11 +143,48 @@
 										"sink": {
 											"type": "AzureSqlSink",
 											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
 										},
 										"enableStaging": false,
 										"translator": {
 											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 1
+													},
+													"sink": {
+														"name": "retailer_number",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 2
+													},
+													"sink": {
+														"name": "msisdn",
+														"type": "Int64",
+														"physicalType": "bigint"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 3
+													},
+													"sink": {
+														"name": "report_date",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
 											"typeConversion": true,
 											"typeConversionSettings": {
 												"allowDataTruncation": true,
@@ -406,27 +443,15 @@
 				},
 				"schema": [
 					{
-						"name": "emp_id",
+						"name": "retailer_number",
 						"type": "String"
 					},
 					{
-						"name": "emp_name",
+						"name": "msisdn",
 						"type": "String"
 					},
 					{
-						"name": "dept_id",
-						"type": "String"
-					},
-					{
-						"name": "salary",
-						"type": "String"
-					},
-					{
-						"name": "credit_date",
-						"type": "String"
-					},
-					{
-						"name": "dept_name",
+						"name": "report_date",
 						"type": "String"
 					}
 				]
