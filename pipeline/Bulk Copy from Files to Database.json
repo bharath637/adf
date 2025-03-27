@@ -166,7 +166,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"table_name": {
-											"value": "@activity('Get Files').output.itemName",
+											"value": "@activity('Get Files').output.childItems[0]['name']",
 											"type": "Expression"
 										},
 										"schema_name": "\"DBO\""
