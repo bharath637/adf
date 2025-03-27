@@ -70,7 +70,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": {
-											"value": "@item()",
+											"value": "@activity('Get Metadata1').output.itemName",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*",
