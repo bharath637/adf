@@ -107,24 +107,20 @@
 										}
 									}
 								}
-							],
-							"outputs": [
-								{
-									"referenceName": "AzureSqlDatabaseSinkDataset",
-									"type": "DatasetReference",
-									"parameters": {
-										"sinkTableName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
-								}
 							]
 						}
 					]
 				}
 			}
 		],
+		"parameters": {
+			"SouceContainer": {
+				"type": "string"
+			},
+			"SourcePath": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
