@@ -120,7 +120,13 @@
 							"outputs": [
 								{
 									"referenceName": "AzureSqlTable1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"table_name": {
+											"value": "@activity('Get Files').output.childItems",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
