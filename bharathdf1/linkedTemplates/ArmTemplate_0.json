@@ -440,11 +440,11 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata1",
+						"name": "Get Files",
 						"type": "GetMetadata",
 						"dependsOn": [],
 						"policy": {
-							"timeout": "0.12:00:00",
+							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
@@ -453,18 +453,25 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataset": {
-								"referenceName": "DelimitedText1",
+								"referenceName": "GetMetadataDataset",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"SourceContainer": {
+										"value": "@pipeline().parameters.SourceContainer",
+										"type": "Expression"
+									},
+									"SourceDirectory": {
+										"value": "@pipeline().parameters.SourceDirectory",
+										"type": "Expression"
+									}
+								}
 							},
 							"fieldList": [
-								"itemName",
 								"childItems"
 							],
 							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true
 							},
 							"formatSettings": {
 								"type": "DelimitedTextReadSettings"
@@ -472,11 +479,11 @@
 						}
 					},
 					{
-						"name": "ForEach1",
+						"name": "ForEachFile",
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Get Metadata1",
+								"activity": "Get Files",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -485,17 +492,16 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Get Metadata1').output.childItems",
+								"value": "@activity('Get Files').output.childItems",
 								"type": "Expression"
 							},
-							"batchCount": 1,
 							"activities": [
 								{
-									"name": "Copy data1",
+									"name": "CopyFiles",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
-										"timeout": "0.12:00:00",
+										"timeout": "7.00:00:00",
 										"retry": 0,
 										"retryIntervalInSeconds": 30,
 										"secureOutput": false,
@@ -506,14 +512,8 @@
 										"source": {
 											"type": "DelimitedTextSource",
 											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"recursive": true,
-												"wildcardFolderPath": {
-													"value": "@activity('Get Metadata1').output.itemName",
-													"type": "Expression"
-												},
-												"wildcardFileName": "*",
-												"enablePartitionDiscovery": false
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true
 											},
 											"formatSettings": {
 												"type": "DelimitedTextReadSettings"
@@ -522,9 +522,7 @@
 										"sink": {
 											"type": "AzureSqlSink",
 											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false,
-											"tableOption": "autoCreate",
-											"disableMetricsCollection": false
+											"sqlWriterUseTableLock": false
 										},
 										"enableStaging": false,
 										"translator": {
@@ -538,9 +536,22 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "DelimitedText1",
+											"referenceName": "SourceDataset",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"fileName": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"SourceContainer": {
+													"value": "@pipeline().parameters.SourceContainer",
+													"type": "Expression"
+												},
+												"SourceDirectory": {
+													"value": "@pipeline().parameters.SourceDirectory",
+													"type": "Expression"
+												}
+											}
 										}
 									],
 									"outputs": [
@@ -549,7 +560,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"table_name": {
-													"value": "@activity('Get Metadata1').output.itemName",
+													"value": "@activity('Get Files').output.itemName",
 													"type": "Expression"
 												},
 												"schema_name": "\"DBO\""
@@ -564,10 +575,19 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"parameters": {
+					"SourceContainer": {
+						"type": "string"
+					},
+					"SourceDirectory": {
+						"type": "string"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/GetMetadataDataset')]",
+				"[concat(variables('factoryId'), '/datasets/SourceDataset')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
