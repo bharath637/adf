@@ -106,14 +106,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSqlDatabaseSinkDataset",
-									"type": "DatasetReference",
-									"parameters": {
-										"sinkTableName": {
-											"value": "@activity('Get Metadata1').output.itemName",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
 								}
 							]
 						}
