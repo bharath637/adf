@@ -91,14 +91,6 @@
 								"enableStaging": false,
 								"translator": {
 									"type": "TabularTranslator",
-									"mappings": [
-										{
-											"source": {
-												"name": "emp_id",
-												"type": "String"
-											}
-										}
-									],
 									"typeConversion": true,
 									"typeConversionSettings": {
 										"allowDataTruncation": true,
