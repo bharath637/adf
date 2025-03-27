@@ -65,7 +65,9 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{}
+						],
 						"typeProperties": {
 							"dataset": {
 								"referenceName": "DelimitedText1",
@@ -73,8 +75,7 @@
 								"parameters": {}
 							},
 							"fieldList": [
-								"itemName",
-								"itemType"
+								"childItems"
 							],
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
