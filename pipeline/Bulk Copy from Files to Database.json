@@ -123,7 +123,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"table_name": {
-											"value": "@activity('Get Files').output.childItems",
+											"value": "@activity('Get Files').output.itemName",
 											"type": "Expression"
 										}
 									}
