@@ -15,7 +15,21 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "retailer_number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "msisdn",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "report_date",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": {
 				"value": "@dataset().schema_name",
