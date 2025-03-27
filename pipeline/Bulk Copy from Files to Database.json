@@ -45,6 +45,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.itemName",
+						"type": "Expression"
+					},
 					"batchCount": 1,
 					"activities": [
 						{
