@@ -125,7 +125,8 @@
 										"table_name": {
 											"value": "@activity('Get Files').output.itemName",
 											"type": "Expression"
-										}
+										},
+										"schema_name": "\"DBO\""
 									}
 								}
 							]
