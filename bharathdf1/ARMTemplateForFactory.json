@@ -33,15 +33,15 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "bharathsynapse1.database.windows.net"
+			"defaultValue": "azuresqlserverbha1.database.windows.net"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "master"
+			"defaultValue": "azuresqldb1"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "sqladminuser"
+			"defaultValue": "sqlserver"
 		}
 	},
 	"variables": {
@@ -73,7 +73,8 @@
 								"parameters": {}
 							},
 							"fieldList": [
-								"itemName"
+								"itemName",
+								"childItems"
 							],
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
@@ -99,7 +100,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Get Metadata1').output.itemName",
+								"value": "@activity('Get Metadata1').output.childItems",
 								"type": "Expression"
 							},
 							"batchCount": 1,
@@ -159,13 +160,14 @@
 									],
 									"outputs": [
 										{
-											"referenceName": "AzureSqlDatabaseSinkDataset",
+											"referenceName": "AzureSqlTable1",
 											"type": "DatasetReference",
 											"parameters": {
-												"sinkTableName": {
+												"table_name": {
 													"value": "@activity('Get Metadata1').output.itemName",
 													"type": "Expression"
-												}
+												},
+												"schema_name": "\"DBO\""
 											}
 										}
 									]
@@ -181,7 +183,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlDatabaseSinkDataset')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
 		{
@@ -304,17 +306,19 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseSinkDataset')]",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Connection to your destination data store.",
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase1",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"sinkTableName": {
+					"table_name": {
+						"type": "string"
+					},
+					"schema_name": {
 						"type": "string"
 					}
 				},
@@ -322,9 +326,12 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "dbo",
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
 					"table": {
-						"value": "@dataset().sinkTableName",
+						"value": "@dataset().table_name",
 						"type": "Expression"
 					}
 				}

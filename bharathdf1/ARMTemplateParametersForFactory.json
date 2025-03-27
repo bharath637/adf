@@ -24,13 +24,13 @@
 			"value": "https://valutsecrect1.vault.azure.net/"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
-			"value": "bharathsynapse1.database.windows.net"
+			"value": "azuresqlserverbha1.database.windows.net"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_database": {
-			"value": "master"
+			"value": "azuresqldb1"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
-			"value": "sqladminuser"
+			"value": "sqlserver"
 		}
 	}
 }
