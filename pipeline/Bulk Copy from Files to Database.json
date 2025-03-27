@@ -106,7 +106,14 @@
 							"outputs": [
 								{
 									"referenceName": "AzureSqlTable1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"table_name": {
+											"value": "@activity('Get Metadata1').output.itemName",
+											"type": "Expression"
+										},
+										"schema_name": "\"DBO\""
+									}
 								}
 							]
 						}
