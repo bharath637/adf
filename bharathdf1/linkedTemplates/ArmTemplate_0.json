@@ -503,7 +503,7 @@
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
 												"wildcardFolderPath": {
-													"value": "@item()",
+													"value": "@activity('Get Metadata1').output.itemName",
 													"type": "Expression"
 												},
 												"wildcardFileName": "*",
@@ -542,7 +542,10 @@
 											"referenceName": "AzureSqlDatabaseSinkDataset",
 											"type": "DatasetReference",
 											"parameters": {
-												"sinkTableName": "bulkvopy"
+												"sinkTableName": {
+													"value": "@activity('Get Metadata1').output.itemName",
+													"type": "Expression"
+												}
 											}
 										}
 									]
