@@ -30,7 +30,8 @@
 						}
 					},
 					"fieldList": [
-						"childItems"
+						"childItems",
+						"itemName"
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
@@ -137,10 +138,12 @@
 		],
 		"parameters": {
 			"SourceContainer": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "container2"
 			},
 			"SourceDirectory": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "test_bulk_copy"
 			}
 		},
 		"annotations": []
