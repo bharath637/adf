@@ -1,0 +1,15 @@
+{
+	"name": "adf-spark-work-loads",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2fac1ab8-88f9-4e46-8fca-c88411a6e937",
+		"tenantId": "8f75d857-f51b-4f8b-8e52-a50d61cc3841"
+	}
+}
