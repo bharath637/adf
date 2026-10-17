@@ -1,0 +1,7 @@
+{
+	"name": "integrationRuntime-bharath",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "created on oct 17th"
+	}
+}
